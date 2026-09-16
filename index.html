@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta PLC Scale Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Include data -->
+    <script src="data.js"></script>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container glass-panel">
+        <header>
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1>Delta PLC Scale Calculator</h1>
+            </div>
+            <p class="subtitle">Core Engine - Offline Version</p>
+        </header>
+
+        <main>
+            <form id="calcForm" class="calc-form">
+                <div class="form-group">
+                    <label for="moduleCode">Mã thiết bị PLC/Module</label>
+                    <div class="input-wrapper flex-row">
+                        <select id="moduleCode" required></select>
+                        <button type="button" id="btnSettings" class="btn-icon" title="Cài đặt Module">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label>Dải đo cảm biến (Destination)</label>
+                        <div class="flex-row">
+                            <input type="number" step="any" id="sensorMin" placeholder="Min" required style="width:100%">
+                            <span style="color:var(--text-secondary); font-weight:bold;">~</span>
+                            <input type="number" step="any" id="sensorMax" placeholder="Max" required style="width:100%">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group half">
+                        <label for="analogSignal">Tín hiệu Analog (Source)</label>
+                        <div class="input-wrapper flex-row">
+                            <select id="analogSignal" required></select>
+                            <button type="button" id="btnAnalogSettings" class="btn-icon" title="Cài đặt Tín hiệu">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span>Tính Toán Scale</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </form>
+
+            <div id="resultSection" class="result-section hidden">
+                <div class="result-header">
+                    <h2>Kết Quả Tính Toán</h2>
+                </div>
+                
+                <div class="result-cards">
+                    <div class="result-card">
+                        <div class="card-title">S2 (Slope)</div>
+                        <div class="card-value" id="resS2">--</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="card-title">S3 (Offset)</div>
+                        <div class="card-value" id="resS3">--</div>
+                    </div>
+                </div>
+
+                <div class="ladder-example">
+                    <h3>Ví dụ lệnh Ladder:</h3>
+                    <code id="resLadder">SCLP D100 K0 K0 D200</code>
+                </div>
+
+                <div class="details-accordion">
+                    <button class="accordion-btn" type="button" id="toggleDetails">
+                        Xem chi tiết phép tính
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="accordion-content" id="detailsContent">
+                        <div class="detail-step">
+                            <h4>Bước 2: Tra cứu thông số</h4>
+                            <p id="detModule">Module: --</p>
+                            <p id="detBaseAnalog">Dải Analog cơ sở: --</p>
+                            <p id="detBaseDigital">Dải Digital cơ sở: --</p>
+                        </div>
+                        <div class="detail-step">
+                            <h4>Bước 3: Quy đổi dải Digital đầu vào (Offset)</h4>
+                            <p id="detSensorSignal">Tín hiệu cảm biến: --</p>
+                            <p id="detSourceRange">Quy đổi Source: --</p>
+                        </div>
+                        <div class="detail-step">
+                            <h4>Bước 4: Thực thi tính toán</h4>
+                            <p id="detS2Calc">S2 = --</p>
+                            <p id="detS3Calc">S3 = --</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="optimizationTip" class="alert-box tip-box hidden">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <strong>Mẹo tối ưu:</strong> Kết quả bị làm tròn có thể gây sai số lớn. Hãy nhân dải Destination lên 10 hoặc 100 lần (VD: 0~10 bar thành 0~1000) để độ phân giải S2, S3 cao hơn, sau đó trên HMI chia lại tương ứng.
+                    </div>
+                </div>
+            </div>
+            
+            <div id="errorBox" class="alert-box error-box hidden">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-content" id="errorMessage">
+                    Có lỗi xảy ra.
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Developed with ❤️ as Core Engine for Delta PLC</p>
+        </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>Quản lý Cơ sở dữ liệu</h2>
+                <button type="button" id="btnCloseModal" class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="moduleListView">
+                    <div class="list-header">
+                        <button type="button" id="btnAddNew" class="btn-sm btn-primary">+ Thêm Module</button>
+                        <button type="button" id="btnResetDB" class="btn-sm btn-danger">Khôi phục gốc</button>
+                    </div>
+                    <div class="module-list" id="moduleList">
+                        <!-- Module items generated here -->
+                    </div>
+                </div>
+                
+                <form id="moduleForm" class="hidden">
+                    <input type="hidden" id="editIndex" value="-1">
+                    <div class="form-group">
+                        <label for="fmModel">Mã Model</label>
+                        <input type="text" id="fmModel" placeholder="VD: MY-PLC-AD" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fmAnalog">Dải Analog (Ngăn cách bằng phẩy nếu có nhiều dải)</label>
+                        <input type="text" id="fmAnalog" placeholder="VD: -10V ~ +10V, 4mA ~ 20mA" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fmDigital">Dải Digital tương ứng (Ngăn cách bằng phẩy)</label>
+                        <input type="text" id="fmDigital" placeholder="VD: -8000 ~ +8000, 0 ~ 4000" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="btnCancelEdit" class="btn-sm">Hủy</button>
+                        <button type="submit" class="btn-sm btn-primary">Lưu lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analog Settings Modal -->
+    <div id="analogSettingsModal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>Cài đặt Tín hiệu Analog</h2>
+                <button type="button" id="btnCloseAnalogModal" class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="analogListView">
+                    <div class="list-header">
+                        <button type="button" id="btnAddNewAnalog" class="btn-sm btn-primary">+ Thêm Tín hiệu</button>
+                        <button type="button" id="btnResetAnalogDB" class="btn-sm btn-danger">Khôi phục gốc</button>
+                    </div>
+                    <div class="module-list" id="analogList">
+                        <!-- Analog items generated here -->
+                    </div>
+                </div>
+                
+                <form id="analogForm" class="hidden">
+                    <input type="hidden" id="editAnalogIndex" value="-1">
+                    <div class="form-group">
+                        <label for="fmAnalogName">Tín hiệu Analog (VD: 4~20mA, 0~10V)</label>
+                        <input type="text" id="fmAnalogName" placeholder="VD: 4~20mA" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="btnCancelAnalogEdit" class="btn-sm">Hủy</button>
+                        <button type="submit" class="btn-sm btn-primary">Lưu lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
